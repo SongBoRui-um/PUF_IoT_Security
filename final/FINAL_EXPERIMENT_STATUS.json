@@ -1,0 +1,30 @@
+{
+  "dataset": {
+    "devices": 50,
+    "common_challenges_per_device": 2048,
+    "conditions": 2,
+    "rows": 204800,
+    "baseline": "25 C, 1.20 V",
+    "stress": "85 C, 1.08 V",
+    "seed": 42
+  },
+  "metrics": [
+    {
+      "devices": 50,
+      "challenges_per_device": 2048,
+      "records": 204800,
+      "uniqueness_mean_pct": 49.83474170918368,
+      "uniqueness_sd_pct": 7.701630791834019,
+      "uniqueness_ci95_low_pct": 49.40285509989107,
+      "uniqueness_ci95_high_pct": 50.26662831847628,
+      "uniformity_mean_pct": 50.509765625,
+      "uniformity_sd_pct": 10.657770696618485,
+      "reliability_pct": 88.03515625,
+      "ber_pct": 11.96484375,
+      "monobit_pass": 11,
+      "monobit_pass_rate_pct": 22.0,
+      "runs_pass": 0,
+      "runs_pass_rate_pct": 0.0
+    }
+  ]
+}

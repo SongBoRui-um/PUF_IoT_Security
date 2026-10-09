@@ -1,0 +1,57 @@
+module arbiter_puf_4bit (
+    input  wire       puf_trigger,   // 触发脉冲（赛跑开始信号）
+    input  wire [3:0] challenge,     // 4位激励输入
+    output wire       response       // 1位物理指纹输出
+);
+
+    // 定义内部级联双轨导线
+    wire [3:0] w_top_to_next;
+    wire [3:0] w_bottom_to_next;
+
+    // 第 0 级：接收初始触发脉冲
+    switch_box sb0 (
+        .in_top(puf_trigger),
+        .in_bottom(puf_trigger),
+        .challenge(challenge[0]),
+        .out_top(w_top_to_next[0]),
+        .out_bottom(w_bottom_to_next[0])
+    );
+
+    // 第 1 级
+    switch_box sb1 (
+        .in_top(w_top_to_next[0]),
+        .in_bottom(w_bottom_to_next[0]),
+        .challenge(challenge[1]),
+        .out_top(w_top_to_next[1]),
+        .out_bottom(w_bottom_to_next[1])
+    );
+
+    // 第 2 级
+    switch_box sb2 (
+        .in_top(w_top_to_next[1]),
+        .in_bottom(w_bottom_to_next[1]),
+        .challenge(challenge[2]),
+        .out_top(w_top_to_next[2]),
+        .out_bottom(w_bottom_to_next[2])
+    );
+
+    // 第 3 级（最后一级）
+    switch_box sb3 (
+        .in_top(w_top_to_next[2]),
+        .in_bottom(w_bottom_to_next[2]),
+        .challenge(challenge[3]),
+        .out_top(w_top_to_next[3]),
+        .out_bottom(w_bottom_to_next[3])
+    );
+
+    // 🏆 仲裁器：由一个标准的 D 触发器 (DFF) 担当裁判
+    // 上路导线接 D 端，下路导线接时钟上升沿 CLK 端
+    // 如果上路先到，D为1，下路触发时锁存出1；反之锁存出0。
+    reg resp_reg;
+    always @(posedge w_bottom_to_next[3]) begin
+        resp_reg <= w_top_to_next[3];
+    end
+
+    assign response = resp_reg;
+
+endmodule

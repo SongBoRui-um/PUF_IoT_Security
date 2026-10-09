@@ -1,0 +1,2 @@
+devices,challenges_per_device,records,uniqueness_mean_pct,uniqueness_sd_pct,uniqueness_ci95_low_pct,uniqueness_ci95_high_pct,uniformity_mean_pct,uniformity_sd_pct,reliability_pct,ber_pct,monobit_pass,monobit_pass_rate_pct,runs_pass,runs_pass_rate_pct
+50,2048,204800,49.834741709183675,7.701630791834019,49.40285509989107,50.26662831847628,50.509765625,10.657770696618483,88.03515625,11.96484375,11,22.0,0,0.0

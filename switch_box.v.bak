@@ -1,0 +1,13 @@
+module switch_box (
+    input  wire in_top,       // 上路输入信号
+    input  wire in_bottom,    // 下路输入信号
+    input  wire challenge,    // 激励控制位 (C_i)
+    output wire out_top,      // 上路输出信号
+    output wire out_bottom    // 下路输出信号
+);
+
+    // 根据 challenge 位决定是直通(0)还是交叉(1)
+    assign out_top    = (challenge == 1'b0) ? in_top    : in_bottom;
+    assign out_bottom = (challenge == 1'b0) ? in_bottom : in_top;
+
+endmodule
